@@ -6,5 +6,15 @@
 
 Если вы нашли ошибку, неточность или опечатку, можете:
 
-- создать pull request с исправлением;
-- написать в тг: [@Tangerine232](https://t.me/Tangerine232).
+### Сообщить об ошибке
+
+1. Войдите в GitHub и нажмите [**New issue**](https://github.com/dariaviktorova/pmpu_conspects/issues/new).
+2. Укажите предмет, дату лекции, страницу PDF и опишите ошибку. При необходимости приложите скриншот.
+3. Нажмите **Create**.
+
+### Предложить исправление
+
+1. Откройте нужный файл `.tex` в папке [`subjects`](subjects/).
+2. Нажмите значок карандаша. Если GitHub предложит **Fork this repository**, нажмите эту кнопку.
+3. Внесите правку и выберите **Commit changes… → Propose changes**.
+4. Проверьте, что целевой репозиторий — `dariaviktorova/pmpu_conspects`, а целевая ветка — `main`. Кратко опишите правку и нажмите **Create pull request**.
