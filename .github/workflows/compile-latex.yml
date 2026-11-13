@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
     paths:
+      - "index.html"
+      - "subjects/**/*.pdf"
       - "subjects/**/*.tex"
       - "preamble.tex"
       - "scripts/update_progress.py"
@@ -15,9 +17,6 @@ on:
       - "preamble.tex"
       - "scripts/update_progress.py"
 
-permissions:
-  contents: write
-
 concurrency:
   group: latex-pdf-${{ github.ref }}
   cancel-in-progress: true
@@ -25,6 +24,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -79,3 +80,32 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "Rebuild lecture PDFs and update progress"
           git push
+
+      - name: Prepare the Pages site
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          mkdir _site
+          cp index.html _site/
+          find subjects -type f -name '*.pdf' -exec cp --parents -t _site/ -- {} +
+
+      - name: Upload the Pages site
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
