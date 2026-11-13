@@ -28,6 +28,34 @@
     .lecture-progress {
       white-space: nowrap;
     }
+
+    .corrections {
+      max-inline-size: 68ch;
+      margin-block: 24px 32px;
+      line-height: 1.5;
+    }
+
+    .corrections h2 {
+      margin: 0 0 16px;
+    }
+
+    .corrections h3 {
+      margin: 16px 0 6px;
+    }
+
+    .corrections ul,
+    .corrections ol {
+      margin: 0;
+      padding-inline-start: 1.5em;
+    }
+
+    .corrections li + li {
+      margin-block-start: 6px;
+    }
+
+    .corrections code {
+      overflow-wrap: anywhere;
+    }
   </style>
 </head>
 
@@ -94,32 +122,20 @@
     <a href="https://github.com/dariaviktorova/pmpu_conspects">GitHub-репозитории</a>.
   </p>
 
-  <h2>Исправления</h2>
+  <section class="corrections" aria-labelledby="corrections-title">
+    <h2 id="corrections-title">Исправления</h2>
 
-  <p>Если вы нашли ошибку, неточность или опечатку, можете:</p>
+    <h3>Сообщить об ошибке</h3>
+    <ul>
+      <li><a href="https://github.com/dariaviktorova/pmpu_conspects/issues/new">Создайте заявку</a>. Укажите семестр, предмет и номер страницы в PDF. Кратко опишите ошибку.</li>
+    </ul>
 
-  <h3>Сообщить об ошибке</h3>
-
-  <p>
-    <a href="https://github.com/dariaviktorova/pmpu_conspects/issues/new">Создайте заявку</a>.
-    Укажите семестр, предмет и номер страницы в PDF. Кратко опишите проблему.
-  </p>
-
-  <h3>Предложить исправление</h3>
-
-  <ol>
-    <li>
-      В папке <a href="https://github.com/dariaviktorova/pmpu_conspects/tree/main/notes">notes</a>
-      выберите семестр и предмет. Откройте файл <code>.tex</code> для редактирования через
-      значок карандаша. Если GitHub предложит создать копию репозитория, выберите
-      <strong>Fork this repository</strong>.
-    </li>
-    <li>Внесите правку и сохраните её через <strong>Commit changes… → Propose changes</strong>.</li>
-    <li>
-      Кратко опишите правку. Проверьте, что в поле <strong>base repository</strong> указан
-      <code>dariaviktorova/pmpu_conspects</code>, а в поле <strong>base</strong> —
-      <code>main</code>. Отправьте запрос через <strong>Create pull request</strong>.
-    </li>
-  </ol>
+    <h3>Предложить исправление</h3>
+    <ol>
+      <li>В папке <a href="https://github.com/dariaviktorova/pmpu_conspects/tree/main/notes">notes</a> выберите семестр и предмет. Откройте файл <code>.tex</code> через значок карандаша. Если GitHub предложит создать копию репозитория, выберите <strong>Fork this repository</strong>.</li>
+      <li>Внесите правку и сохраните её через <strong>Commit changes… → Propose changes</strong>.</li>
+      <li>Кратко опишите правку и отправьте её через <strong>Create pull request</strong>. Цель запроса — ветка <code>main</code> репозитория <code>dariaviktorova/pmpu_conspects</code>.</li>
+    </ol>
+  </section>
 </body>
 </html>
