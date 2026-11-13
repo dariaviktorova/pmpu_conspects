@@ -6,7 +6,6 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = ROOT / "index.html"
-README_PATH = ROOT / "README.md"
 
 SUBJECTS = [
     (
@@ -55,8 +54,6 @@ SUBJECTS = [
 
 HTML_START_MARKER = "<!-- PROGRESS_TABLE_START -->"
 HTML_END_MARKER = "<!-- PROGRESS_TABLE_END -->"
-README_START_MARKER = "<!-- README_PROGRESS_START -->"
-README_END_MARKER = "<!-- README_PROGRESS_END -->"
 NEWLECTION_RE = re.compile(r"\\newlection\s*\{([^{}]+)\}")
 
 
@@ -116,26 +113,6 @@ def build_html_table() -> str:
     )
 
 
-def build_readme_table() -> str:
-    rows = [
-        "| Предмет | Последняя написанная лекция |",
-        "|---|---|",
-    ]
-
-    for subject_name, lecturer, tex_path, pdf_href in SUBJECTS:
-        latest = latest_lection(tex_path)
-        progress = f"Лекция от {latest}" if latest else "—"
-        rows.append(
-            f"| {lecturer}, [{subject_name}]({pdf_href}) | {progress} |"
-        )
-
-    return (
-        f"{README_START_MARKER}\n"
-        + "\n".join(rows)
-        + f"\n{README_END_MARKER}"
-    )
-
-
 def replace_marked_block(text: str, start_marker: str, end_marker: str, replacement: str) -> str:
     if start_marker not in text or end_marker not in text:
         raise RuntimeError(
@@ -156,15 +133,6 @@ def main() -> None:
         build_html_table(),
     )
     INDEX_PATH.write_text(html, encoding="utf-8")
-
-    readme = README_PATH.read_text(encoding="utf-8")
-    readme = replace_marked_block(
-        readme,
-        README_START_MARKER,
-        README_END_MARKER,
-        build_readme_table(),
-    )
-    README_PATH.write_text(readme, encoding="utf-8")
 
     for subject_name, _, tex_path, _ in SUBJECTS:
         latest = latest_lection(tex_path)
