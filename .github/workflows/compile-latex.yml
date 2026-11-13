@@ -5,16 +5,14 @@ on:
     branches: [main]
     paths:
       - "index.html"
-      - "subjects/**/*.pdf"
-      - "subjects/**/*.tex"
-      - "preamble.tex"
+      - "notes/**/*.pdf"
+      - "notes/**/*.tex"
       - "scripts/update_progress.py"
       - ".github/workflows/compile-latex.yml"
   pull_request:
     branches: [main]
     paths:
-      - "subjects/**/*.tex"
-      - "preamble.tex"
+      - "notes/**/*.tex"
       - "scripts/update_progress.py"
 
 concurrency:
@@ -59,7 +57,7 @@ jobs:
               latexmk -pdf -interaction=nonstopmode -halt-on-error "$filename"
               latexmk -c "$filename"
             )
-          done < <(find subjects -type f -name '*.tex' -print0 | sort -z)
+          done < <(find notes -mindepth 3 -type f -name '*.tex' -print0 | sort -z)
 
       - name: Update lecture progress on the site
         run: python scripts/update_progress.py
@@ -69,14 +67,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: compiled-conspects
-          path: subjects/**/*.pdf
+          path: notes/*/*/**/*.pdf
 
       - name: Commit rebuilt PDFs and the lecture catalog
         if: github.event_name == 'push'
         run: |
           git config user.name "actions-user"
           git config user.email "65916846+actions-user@users.noreply.github.com"
-          git add 'subjects/**/*.pdf' index.html
+          git add -- ':(glob)notes/*/*/**/*.pdf' index.html
           git diff --cached --quiet && exit 0
           git commit -m "Rebuild lecture PDFs and update progress"
           git push
@@ -87,7 +85,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html _site/
-          find subjects -type f -name '*.pdf' -exec cp --parents -t _site/ -- {} +
+          find notes -mindepth 3 -type f -name '*.pdf' -exec cp --parents -t _site/ -- {} +
 
       - name: Upload the Pages site
         if: github.event_name == 'push'

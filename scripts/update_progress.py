@@ -7,48 +7,36 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = ROOT / "index.html"
 
-SUBJECTS = [
+SEM3_SUBJECTS = [
     (
         "Теоретическая механика",
         "Ирина Юрьевна Потоцкая",
-        ROOT / "subjects/01-theoretical-mechanics/theormech.tex",
-        "subjects/01-theoretical-mechanics/theormech.pdf",
+        "notes/3/theoretical-mechanics/theormech.tex",
     ),
     (
         "Математический анализ",
         "Мария Александровна Скопина",
-        ROOT / "subjects/02-mathematical-analysis/matan.tex",
-        "subjects/02-mathematical-analysis/matan.pdf",
+        "notes/3/mathematical-analysis/matan.tex",
     ),
     (
         "Теория функций комплексной переменной",
         "Александр Дмитриевич Овсянников",
-        ROOT / "subjects/03-complex-analysis/tfcv.tex",
-        "subjects/03-complex-analysis/tfcv.pdf",
+        "notes/3/complex-analysis/tfcv.tex",
     ),
     (
         "Теория групп и теория чисел",
         "Александр Владимирович Кривошеин",
-        ROOT / "subjects/04-group-theory-number-theory/gtnt.tex",
-        "subjects/04-group-theory-number-theory/gtnt.pdf",
+        "notes/3/group-theory-number-theory/gtnt.tex",
     ),
     (
         "Дифференциальные уравнения",
         "Алексей Петрович Жабко",
-        ROOT / "subjects/05-differential-equations/di_furry.tex",
-        "subjects/05-differential-equations/di_furry.pdf",
+        "notes/3/differential-equations/di_furry.tex",
     ),
     (
         "Численные методы",
         "Сергей Иванович Перегудин",
-        ROOT / "subjects/06-numerical-methods/chislaki.tex",
-        "subjects/06-numerical-methods/chislaki.pdf",
-    ),
-    (
-        "Базы данных и сетевые технологии",
-        "Мария Анатольевна Малинина",
-        ROOT / "subjects/07-databases-network-technologies/bdst.tex",
-        "subjects/07-databases-network-technologies/bdst.pdf",
+        "notes/3/numerical-methods/chislaki.tex",
     ),
 ]
 
@@ -79,7 +67,9 @@ def latest_lection(tex_path: Path) -> str | None:
 def build_html_table() -> str:
     rows = []
 
-    for subject_name, lecturer, tex_path, pdf_href in SUBJECTS:
+    for subject_name, lecturer, source in SEM3_SUBJECTS:
+        tex_path = ROOT / source
+        pdf_href = tex_path.with_suffix(".pdf").relative_to(ROOT).as_posix()
         latest = latest_lection(tex_path)
         if latest:
             progress = f'<span class="lecture-progress">Лекция от {escape(latest)}</span>'
@@ -134,8 +124,8 @@ def main() -> None:
     )
     INDEX_PATH.write_text(html, encoding="utf-8")
 
-    for subject_name, _, tex_path, _ in SUBJECTS:
-        latest = latest_lection(tex_path)
+    for subject_name, _, source in SEM3_SUBJECTS:
+        latest = latest_lection(ROOT / source)
         print(f"{subject_name}: {latest or '—'}")
 
 
