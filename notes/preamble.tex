@@ -263,11 +263,23 @@
 \usepackage{changepage}  % для \blockindent
 
 % Леммы
+\ExplSyntaxOn
+
 \NewDocumentCommand{\lemma}{o +m}{%
     \par\noindent
-    \textbf{Лемма\IfValueT{#1}{ (#1)}.}~#2
+    \textbf{%
+        Лемма
+        \IfValueT{#1}{%
+            \regex_match:nnTF { \A \d+ \Z } { #1 }
+                {~#1}
+                {~(#1)}
+        }%
+        .
+    }~#2
     \par
 }
+
+\ExplSyntaxOff
 
 % Отступ (переименовано из \indent, чтобы не ломать ядро LaTeX)
 \newcommand{\blockindent}[1]{%
