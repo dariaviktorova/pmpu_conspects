@@ -1107,5 +1107,271 @@ $x^0=(\varphi_1(t^0),\dots,\varphi_d(t^0))$.
     \]
 \end{proof}
 
+\newlection{6 ноября 2026 г.}
+
+\section{Сходимость почти везде и по мере}
+
+Рассмотрим пространство $\mathbb R^d$ с мерой Лебега.
+
+\definition{
+Пусть $f_n,f$ --- функции, определенные и измеримые на $E\subset X$. Говорят, что последовательность $f_n$ \textit{сходится по мере} на $E$ к $f$, $f_n\xRightarrow[n\to\infty]{}f$, если
+\[
+\forall \varepsilon>0\colon \mu E[|f_n(x)-f(x)|\geq\varepsilon]\to0.
+\]
+}
+
+\definition{
+Функции $f$ и $g$ называются \textit{эквивалентными}, $f\sim g$, если они совпадают почти везде на $E$, то есть
+\[
+\mu E[f(x)\neq g(x)]=0.
+\]
+}
+
+\theorem[1]{
+Пусть $f_n\xRightarrow[n\to\infty]{E}f$, $f_n\xRightarrow[n\to\infty]{E}g$. Тогда $f\sim g$.
+}
+
+\begin{proof}
+    Рассмотрим
+    \[
+    E[f(x)\neq g(x)]=\bigcup_{p=1}^{\infty}\underbrace{E\left[|f(x)-g(x)|>\frac{1}{p}\right]}_{E_p}.
+    \]
+    Введем
+    \[
+    E'_{pn}=E\left[|f_n(x)-f(x)|>\frac{1}{2p}\right], \qquad
+    E''_{pn}=E\left[|f_n(x)-g(x)|>\frac{1}{2p}\right].
+    \]
+    Покажем, что $E_p\subset E'_{pn}\cup E''_{pn}$. Пусть $x\notin E'_{pn}$ и $x\notin E''_{pn}$. Тогда
+    \[
+    |f_n(x)-f(x)|\leq\frac{1}{2p}, \qquad |f_n(x)-g(x)|\leq\frac{1}{2p}.
+    \]
+    По неравенству треугольника выполняется
+    \[
+    |f(x)-g(x)|\leq|f(x)-f_n(x)|+|f_n(x)-g(x)|\leq\frac{1}{p},
+    \]
+    то есть $x\notin E_p$. Следовательно, $\forall n \colon \mu E_p\leq\mu E'_{pn}+\mu E''_{pn}$. \\
+    Так как $f_n\xRightarrow[n\to\infty]{E}f$ и $f_n\xRightarrow[n\to\infty]{E}g$, то $\mu E'_{pn}\to0$ и $\mu E''_{pn}\to0 \Rightarrow \mu E_p=0 \ \forall p$. Тогда
+    \[
+    \mu E[f(x)\neq g(x)]\leq\sum_{p=1}^{\infty}\mu E_p=0.
+    \]
+    Следовательно, $f\sim g$.
+\end{proof}
+
+\theorem[Лебега]{
+Пусть $\mu E<\infty$, $f_n$, $n\in\mathbb N$, измеримы на $E$. Тогда
+\[
+f_n\to f \ \text{почти везде на} \ E
+\Rightarrow
+f_n\xRightarrow[n\to\infty]{E}f.
+\]
+}
+
+\begin{proof}
+    Введем
+    \[
+    E'=E[f_n(x)\not\to f(x)].
+    \]
+    Так как $f_n\to f$ почти везде на $E$, то $\mu E'=0$.
+
+    Возьмем $\varepsilon>0$ и положим $E_n:=E[|f_n(x)-f(x)|\geq\varepsilon]$. Докажем, что $\mu E_n\xrightarrow[n\to\infty]{}0$. Введем
+    \[
+    B_k=\bigcup_{n=k}^{\infty}E_n, \qquad B=\bigcap_{k=1}^{\infty}B_k.
+    \]
+    Покажем, что $B\subset E'$. Пусть $x\in B$. Тогда $x\in B_k\ \forall k$, следовательно,
+    \[
+    \forall k\ \exists n\geq k\colon x\in E_n
+    \Rightarrow
+    \forall k\ \exists n\geq k\colon |f_n(x)-f(x)|\geq\varepsilon.
+    \]
+    Значит, $f_n(x)\not\to f(x)$, то есть $x\in E'$. Следовательно, $B\subset E'$ и $\mu B=0$.
+
+    Так как $B_{k+1}\subset B_k$ и $\mu B_1\leq\mu E<\infty$, то по предложению о предельном переходе для убывающей последовательности измеримых множеств выполняется
+    \[
+    \mu B_k\to\mu B=0.
+    \]
+    При этом $E_k\subset B_k\Rightarrow\mu E_k\leq\mu B_k\to0$. Следовательно, $\mu E_k\to0$, то есть $f_n\xRightarrow[n\to\infty]{E}f$.
+\end{proof}
+
+Обратное утверждение неверно.
+
+\example{
+Пусть $E=[0,1)$, $\mu E=1$. Для $1\leq m\leq n$ положим
+\[
+f_{n,m}(x)=
+\begin{cases}
+1, & \dfrac{m-1}{n}\leq x<\dfrac{m}{n},\\
+0, & \text{иначе}.
+\end{cases}
+\]
+
+Для первых значений $n$ получаем:
+
+\begin{center}
+\begin{tikzpicture}[x=4.2cm,y=0.65cm]
+    % n = 1
+    \begin{scope}[yshift=5.0cm]
+        \node[left] at (-0.16,0.8) {$(1)$};
+        \draw[->] (0,0) -- (1.15,0);
+        \draw[->] (0,0) -- (0,1.35);
+        \draw[line width=1.1pt] (0,1) -- (1,1);
+        \node[left] at (0,1) {$1$};
+        \node[below] at (0,0) {$0$};
+        \node[below] at (1,0) {$1$};
+    \end{scope}
+
+    % n = 2
+    \begin{scope}[yshift=2.5cm]
+        \node[left] at (-0.16,0.8) {$(2)$};
+        \draw[->] (0,0) -- (1.15,0);
+        \draw[->] (0,0) -- (0,1.35);
+        \draw[dashed] (0.5,-0.15) -- (0.5,1.15);
+        \draw[line width=1.1pt] (0,1) -- (0.5,1);
+        \draw[line width=1.1pt] (0.5,0.55) -- (1,0.55);
+        \node[left] at (0,1) {$1$};
+        \node[below] at (0.5,0) {$\frac12$};
+        \node[below] at (1,0) {$1$};
+    \end{scope}
+
+    % n = 3
+    \begin{scope}
+        \node[left] at (-0.16,0.8) {$(3)$};
+        \draw[->] (0,0) -- (1.15,0);
+        \draw[->] (0,0) -- (0,1.35);
+        \draw[dashed] (1/3,-0.15) -- (1/3,1.15);
+        \draw[dashed] (2/3,-0.15) -- (2/3,1.15);
+        \draw[line width=1.1pt] (0,1) -- (1/3,1);
+        \draw[line width=1.1pt] (1/3,0.55) -- (2/3,0.55);
+        \draw[line width=1.1pt] (2/3,0.10) -- (1,0.10);
+        \node[left] at (0,1) {$1$};
+        \node[below] at (1/3,0) {$\frac13$};
+        \node[below] at (2/3,0) {$\frac23$};
+        \node[below] at (1,0) {$1$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+То есть при фиксированном $n$ отрезок $[0,1)$ разбивается на $n$ частей длины $\frac{1}{n}$, и значение $1$ последовательно ``перемещается'' по этим частям. При этом
+\[
+\mu E[f_{n,m}(x)\neq0]=\frac{1}{n}\xrightarrow[n\to\infty]{}0,
+\]
+следовательно, последовательность сходится к $0$ по мере.
+
+Рассмотрим $x\in[0,1)$. Для каждого $n$ существует $m=\overline{1,n}$ такое, что
+\[
+\frac{m-1}{n}\leq x<\frac{m}{n},
+\]
+то есть $f_{n,m}(x)=1$. В то же время в каждом блоке при $n\geq2$ существуют функции, для которых $f_{n,m}(x)=0$. Следовательно, для каждого $x\in[0,1)$ значения $0$ и $1$ встречаются бесконечное число раз, поэтому поточечной сходимости нет.
+
+Таким образом, сходимости почти везде также нет.
+}
+
+\newlection{11 ноября 2026 г.}
+
+\lemma[Бореля --- Кантелли]{
+Пусть существует последовательность $\{E_n\}_n$, $E_n$ измеримы, $\sum_n\mu E_n<\infty$. Обозначим
+\[
+B_n=\bigcup_{k=n}^{\infty}E_k, \qquad B=\bigcap_n B_n.
+\]
+Тогда $\mu B=0$.
+}
+
+\begin{proof}
+    Так как $B_n=\bigcup_{k=n}^{\infty}E_k$, то выполняется
+    \[
+    \mu B_n\leq\sum_{k=n}^{\infty}\mu E_k\to0.
+    \]
+    Так как $B=\bigcap_n B_n$, то $B\subset B_n \forall n$. Следовательно, $\mu B\leq\mu B_n\to0$. Тогда $\mu B=0$.
+\end{proof}
+
+\theorem[Рисса]{
+Пусть $f_n\xRightarrow{E}f$. Тогда $\exists \{f_{n_k}\}\colon f_{n_k}\to f$ почти везде на $E$.
+}
+
+\begin{proof}
+    Возьмем $\varepsilon_k>0$, $\varepsilon_k\to0$. Тогда, по определению сходимости по мере,
+    \[
+    \mu E[|f_n(x)-f(x)|\geq\varepsilon_k]\to0 \ \forall k.
+    \]
+    Поэтому можно выбрать возрастающую последовательность $n_k$ такую, что
+    \[
+    \mu\underbrace{\{|f_{n_k}(x)-f(x)|\geq\varepsilon_k\}}_{E_k}<\frac{1}{2^k}.
+    \]
+    Введем
+    \[
+    B_n=\bigcup_{k=n}^{\infty}E_k, \qquad B=\bigcap_n B_n.
+    \]
+    Так как $\sum_{k=1}^{\infty}\mu E_k\leq\sum_{k=1}^{\infty}\frac{1}{2^k}<\infty$, то по лемме Бореля --- Кантелли получим $\mu B=0$.
+
+    Рассмотрим $x\in E\setminus B\Rightarrow x\notin B$. Значит, $\exists N\colon x\notin B_N$. Так как $B_N=\bigcup_{k=N}^{\infty}E_k$, то $\exists N\colon \forall k\geq N\colon x\notin E_k$.
+    То есть
+    \[
+    \exists N\colon \forall k\geq N\colon |f_{n_k}(x)-f(x)|<\varepsilon_k.
+    \]
+    Так как $\varepsilon_k\to0$, то
+    \[
+    \forall \varepsilon>0 \exists N_1\colon \forall k\geq N_1\colon \varepsilon_k<\varepsilon.
+    \]
+    Пусть $k\geq\max\{N,N_1\}$. Тогда $|f_{n_k}(x)-f(x)|<\varepsilon$. Следовательно, $f_{n_k}(x)\to f(x)$.
+
+    Таким образом, $f_{n_k}(x)\to f(x) \forall x\in E\setminus B$. Так как $\mu B=0$, то $f_{n_k}\to f$ почти везде на $E$.
+\end{proof}
+
+\corollary{
+Пусть $\mu E<\infty$, $f_n\xRightarrow[n\to\infty]{E}f$, $f_n\to g$ почти везде на $E$. Тогда $f\sim g$.
+}
+
+\begin{proof}
+    По теореме Рисса $\exists \{f_{n_k}\}\colon f_{n_k}\to f$ почти везде на $E$. Так как $f_n\to g$ почти везде на $E$, то $f_{n_k}\to g$ почти везде на $E$.
+    По теореме Лебега
+    \[
+    f_{n_k}\xRightarrow[k\to\infty]{E}f, \qquad
+    f_{n_k}\xRightarrow[k\to\infty]{E}g.
+    \]
+    Тогда по теореме 1 $f\sim g$.
+\end{proof}
+
+\theorem[Егорова]{
+Пусть $f,f_n$, $n\in\mathbb N$, измеримы на $E$, $f$ почти везде конечна, $\mu E<\infty$, $f_n\to f$ почти везде на $E$. Тогда
+\[
+\forall \varepsilon>0\ \exists E_\varepsilon\subset E\colon \mu E_\varepsilon<\varepsilon,
+\]
+$E_\varepsilon$ измеримо и $f_n\rightrightarrows f$ на $E\setminus E_\varepsilon$.
+}
+
+\begin{proof}
+    Введем
+    \[
+    g_n(x):=\sup_{k\geq n}|f_k(x)-f(x)|.
+    \]
+    Заметим, что $g_n(x)\to0$ почти везде на $E$. Так как $f_n\to f$ почти везде, то $\exists \widetilde E\subset E$ полной меры, то есть $\mu(E\setminus\widetilde E)=0$, причем $|f_k(x)-f(x)|\to0 \ \forall x\in\widetilde E$. Зафиксируем $x\in\widetilde E$.
+    \[
+    \forall \varepsilon>0 \exists N \colon |f_k(x)-f(x)|<\varepsilon \ \forall k\geq N.
+    \]
+    Тогда $\forall n\geq N$ выполняется $g_n(x)\leq\varepsilon$. Следовательно, $g_n(x)\to0$ почти везде на $E$.
+
+    По теореме Лебега $g_n\xRightarrow{E}0$. Возьмем $\varepsilon_k>0$, $\varepsilon_k\to0$. Тогда по определению сходимости по мере
+    \[
+    \mu E[|g_n(x)|\geq\varepsilon_k]\to0 \ \forall k.
+    \]
+    Следовательно, можно выбрать возрастающую последовательность $n_k$ такую, что
+    \[
+    \mu\underbrace{E[|g_{n_k}(x)|\geq\varepsilon_k]}_{E_k}<\frac{1}{2^k}.
+    \]
+    Тогда $\sum_{k=1}^{\infty}\mu E_k<\infty$. Зададим $\varepsilon>0$. Из сходимости ряда $\exists N\colon \sum_{k=N}^{\infty}\mu E_k<\varepsilon$. Положим $E_\varepsilon:=\bigcup_{k=N}^{\infty}E_k$. Тогда $E_\varepsilon$ измеримо и $\mu E_\varepsilon\leq\sum_{k=N}^{\infty}\mu E_k<\varepsilon$.
+
+    Рассмотрим $x\notin \bigcup_{k=N}^{\infty}E_k$. Тогда $x\notin E_k\ \forall k\geq N$, то есть $g_{n_k}(x)<\varepsilon_k\ \forall k\geq N$. По определению $g_{n_k}$
+    \[
+    \sup_{l\geq n_k}|f_l(x)-f(x)|<\varepsilon_k.
+    \]
+    Так как $\varepsilon_k\to0$, то $\forall \varepsilon>0\ \exists k\geq N\colon \varepsilon_k<\varepsilon$. Тогда $\forall x\in E\setminus E_\varepsilon$, $\forall l\geq n_k$ выполняется
+    \[
+    |f_l(x)-f(x)|<\varepsilon_k<\varepsilon.
+    \]
+    Значит, $f_l\rightrightarrows f$ на $E\setminus E_\varepsilon$.
+\end{proof}
+
+\theorem[о диагонализации последовательности]{
+
+}
 
 \end{document}
