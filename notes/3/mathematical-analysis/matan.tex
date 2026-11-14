@@ -1107,6 +1107,40 @@ $x^0=(\varphi_1(t^0),\dots,\varphi_d(t^0))$.
     \]
 \end{proof}
 
+\newlection{23 сентября 2026 г.}
+Рассмотрим
+
+\newlection{25 сентября 2026 г.}
+
+\newlection{9 октября 2026 г.}
+
+\theorem[о предельном переходе в несобственных интегралах с параметром]{
+Пусть $\forall y\in Y$ функция $f$ непрерывна по $x$ на $[a,b)$ и $y_0$ - предельная точка множества $Y$;
+$\forall \mu\in[a,b)$ функция $f\underset{y\to y_0}{\overset{[a,\mu]}{\rightrightarrows}} g(x)$; $\Phi$ сходится равномерно на $Y$
+\[
+\Phi (y_0)=\int_a^b f(x,y_0)\differential x.
+\]
+Тогда
+\[
+\int_a^b g(x)\d x \ \text{сходится и} \ \lim_{y\to y_0}\Phi(y)=\int_a^b g(x)\d x=\lim_{y\to y_0}\int_a^b f(x,y)\d x=\int_a^b \lim_{y\to y_0}f(x,y)\d x.
+\]
+}
+
+\begin{proof}
+    
+\end{proof}
+
+\chapter{Теория меры}
+
+\section*{Литература}
+\begin{enumerate}
+    \item Вулих Б.\ З. <<Краткий курс теории функций вещественной переменной. Введение в теорию интеграла>>. --- М. : Наука, 1973.
+    \item Натансон И.\ П. <<Теория функций вещественной переменной>>. --- М. : Наука, 1974.
+    \item Макаров Б.\ М., Подкорытов А.\ Н. <<Лекции по вещественному анализу>>. --- СПб. : БХВ-Петербург, 2011.
+\end{enumerate}
+
+\section{Полукольца и алгебры}
+
 \newlection{6 ноября 2026 г.}
 
 \section{Сходимость почти везде и по мере}
@@ -1371,7 +1405,101 @@ $E_\varepsilon$ измеримо и $f_n\rightrightarrows f$ на $E\setminus E_
 \end{proof}
 
 \theorem[о диагонализации последовательности]{
-
+Пусть $h,g_n,f_k^{(n)}$, $n\in\mathbb N$, измеримы на $E$, $\mu E<\infty$; $f_k^{(n)}\underset{k\to\infty}{\to}g_n$ почти везде на $E$ и $g_n\underset{n\to\infty}{\to}h$ почти везде на $E$. Тогда $\exists k_n\colon f_{k_n}^{(n)}\underset{n\to\infty}{\to}h$ почти везде на $E$.
 }
+
+\begin{proof}
+    По теореме Лебега $\forall n\in\mathbb N\colon f_k^{(n)}\xRightarrow[k\to\infty]{E}g_n$. Тогда по определению сходимости по мере
+    \[
+    \mu E[|f_k^{(n)}(x)-g_n(x)|>\varepsilon]\underset{k\to\infty}{\to}0 \ \forall\varepsilon>0.
+    \]
+    Положим $\varepsilon=\frac{1}{n}$. Следовательно, $\exists k_n\colon$
+    \[
+    \mu\underbrace{E\left[\left|f_{k_n}^{(n)}(x)-g_n(x)\right|\geq\frac{1}{n}\right]}_{E_n}<\frac{1}{2^n}.
+    \]
+    Тогда $\sum_n\mu E_n\leq\sum_n\frac{1}{2^n}<\infty$. Введем
+    \[
+    B_p=\bigcup_{n=p}^{\infty}E_n, \qquad B=\bigcap_{p=1}^{\infty}B_p.
+    \]
+    По лемме Бореля --- Кантелли $\sum_n\mu E_n<\infty\Rightarrow\mu B=0$.
+
+    Рассмотрим $x\notin B$. Тогда $\exists p\colon x\notin B_p$. Так как $B_p=\bigcup_{n=p}^{\infty}E_n$, то
+    \[
+    \exists p\colon \forall n\geq p\colon \left|f_{k_n}^{(n)}(x)-g_n(x)\right|<\frac{1}{n}.
+    \]
+    Так как $g_n\underset{n\to\infty}{\to}h$ почти везде на $E$, введем $E':=E[g_n(x)\not\to h(x)]$. Тогда $\mu E'=0$. Рассмотрим $x\in E\setminus(B\cup E')$. Для достаточно больших $n$ выполняется
+    \[
+    |f_{k_n}^{(n)}(x)-h(x)|
+    \leq |f_{k_n}^{(n)}(x)-g_n(x)|+|g_n(x)-h(x)|
+    <\frac{1}{n}+|g_n(x)-h(x)|\to0.
+    \]
+    При этом $\mu(B\cup E')\leq\mu B+\mu E'=0$. Следовательно, $f_{k_n}^{(n)}\underset{n\to\infty}{\to}h$ почти везде на $E$.
+\end{proof}
+
+\newlection{13 ноября 2026 г.}
+
+\lemma[1]{
+Пусть $F\subset\mathbb R^d$, $F$ замкнуто, $g(x)=\rho(x,F)$. Тогда $g\in C(\mathbb R^d)$.
+}
+
+\begin{proof}
+    Возьмем $x',x''\in\mathbb R^d$. Зададим $\varepsilon>0$. По определению расстояния до множества
+    \[
+    \exists y\in F\colon \|x''-y\|\leq\rho(x'',F)+\varepsilon.
+    \]
+    Отсюда
+    \[
+    -\rho(x'',F)\leq-\|x''-y\|+\varepsilon.
+    \]
+    По определению $\rho(x',F)\leq\|x'-y\|$. По неравенству треугольника $\|x'-y\|\leq\|x''-y\|+\|x'-x''\|$. Следовательно,
+    \[
+    \rho(x',F)-\rho(x'',F)
+    \leq\|x'-y\|-\|x''-y\|+\varepsilon
+    \leq\|x'-x''\|+\varepsilon.
+    \]
+    Устремляя $\varepsilon\to0$, получим
+    \[
+    \rho(x',F)-\rho(x'',F)\leq\|x'-x''\|.
+    \]
+    Для $x'',x'$ получим $\rho(x'',F)-\rho(x',F)\leq\|x'-x''\|$. Значит,
+    \[
+    |\rho(x',F)-\rho(x'',F)|\leq\|x'-x''\|.
+    \]
+    При $x'\to x''$ правая часть стремится к $0$. Следовательно, $g(x')\to g(x'')$, то есть $g\in C(\mathbb R^d)$.
+\end{proof}
+
+\lemma[2]{
+Пусть $F\subset\mathbb R^d$, $F$ замкнуто. Тогда $\exists \{g_n\}$, $g_n\in C(\mathbb R^d)\colon \forall x\in\mathbb R^d\colon g_n(x)\to\chi_F(x)$.
+}
+
+\begin{proof}
+    Введем
+    \[
+    H_n=\left\{x\in\mathbb R^d\colon \rho(x,F)\geq\frac{1}{n}\right\} \ \forall n\in\mathbb N.
+    \]
+    По лемме 1 функция $\rho(x,F)$ непрерывна. Следовательно, $H_n$ замкнуто.
+
+    Введем
+    \[
+    g_n(x)=\frac{\rho(x,H_n)}{\rho(x,H_n)+\rho(x,F)}.
+    \]
+    По лемме 1 функции $\rho(x,H_n)$ и $\rho(x,F)$ непрерывны. При этом $\rho(x,H_n)+\rho(x,F)>0 \ \forall x\in\mathbb R^d$. Следовательно, $g_n\in C(\mathbb R^d)$.
+
+    Пусть $x\in F$. Тогда $\rho(x,F)=0$, поэтому $g_n(x)=1 \ \forall n\in\mathbb N$.
+    
+    Пусть $x\notin F$. Так как $F$ замкнуто, то $\rho(x,F)>0$. 
+    \[
+    \exists N\colon \frac{1}{N}\leq\rho(x,F)\Rightarrow \forall n\geq N\colon x\in H_n\Rightarrow g_n(x)=0.
+    \]
+    Следовательно, $g_n(x)\to\chi_F(x)\ \forall x\in\mathbb R^d$.
+\end{proof}
+
+\theorem[Фреше]{
+Пусть $f$ измерима на $\mathbb R^d$ и почти всюду конечна. Тогда $\exists \{g_n\}$, $g_n\in C(\mathbb R^d)\colon g_n\to f$ почти везде на $\mathbb R^d$.
+}
+
+\begin{proof}
+    Любая измеримая функция может быть представлена как предел непрерывных функций почти везде.
+\end{proof}
 
 \end{document}
