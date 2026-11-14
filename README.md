@@ -6,10 +6,10 @@
 
 ### Сообщить об ошибке
 
-- [Создайте заявку](https://github.com/dariaviktorova/pmpu_conspects/issues/new). Укажите семестр, предмет и номер страницы в PDF. Кратко опишите ошибку.
+- [Создайте заявку](https://github.com/dariaviktorova/dariaviktorova.github.io/issues/new). Укажите семестр, предмет и номер страницы в PDF. Кратко опишите ошибку.
 
 ### Предложить исправление
 
 1. В папке [notes](notes/) выберите семестр и предмет. Откройте файл `.tex` через значок карандаша. Если GitHub предложит создать копию репозитория, выберите **Fork this repository**.
 2. Внесите правку и сохраните её через **Commit changes… → Propose changes**.
-3. Кратко опишите правку и отправьте её через **Create pull request**. Цель запроса — ветка `main` репозитория `dariaviktorova/pmpu_conspects`.
+3. Кратко опишите правку и отправьте её через **Create pull request**. Цель запроса — ветка `main` репозитория `dariaviktorova/dariaviktorova.github.io`.
